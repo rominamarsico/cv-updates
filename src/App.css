@@ -22,3 +22,9 @@
   align-items: center;
   gap: 1rem;
 }
+
+.horizontalFlex {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}

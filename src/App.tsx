@@ -10,6 +10,8 @@ import { ToggleLanguage } from "./components/ToggleLanguage.tsx";
 import { Position } from "./components/Position.tsx";
 import { Availability } from "./components/Availability.tsx";
 import { useTranslation } from "react-i18next";
+import { DownloadJson } from "./components/DownloadJson.tsx";
+import { DndUpload } from "./components/DndUpload.tsx";
 
 function App() {
   const [position, setPosition] = useState<string>("");
@@ -46,9 +48,13 @@ function App() {
       </div>
       <div className="controls">
         <h1>CV updates</h1>
-        <PDFDownloadLink document={pdfDocument} fileName={`${fileName}.pdf`}>
-          {({ loading }) => getDownloadButton(loading)}
-        </PDFDownloadLink>
+        <DndUpload />
+        <div className="horizontalFlex">
+          <PDFDownloadLink document={pdfDocument} fileName={`${fileName}.pdf`}>
+            {({ loading }) => getDownloadButton(loading)}
+          </PDFDownloadLink>
+          <DownloadJson />
+        </div>
         <ToggleLanguage />
         <Position positionCallback={(value) => setPosition(value)} />
         <Availability

@@ -25,11 +25,16 @@ type ProjectDetail = {
   detail: string;
 };
 
+type ProjectContribution = {
+  name: string;
+  detail: string[];
+};
+
 export type Project = {
   date: string;
   title: string;
   description: ProjectDetail;
-  contribution: ProjectDetail;
+  contribution: ProjectContribution;
   techStack: ProjectDetail;
   industry: ProjectDetail;
 };
