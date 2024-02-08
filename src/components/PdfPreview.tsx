@@ -1,37 +1,29 @@
 import { Image, Document, Page, Text, View } from "@react-pdf/renderer";
 import { styles } from "./pdf-styles";
 import { useTranslation } from "react-i18next";
-import { Details, Skills, Work, Education, Project } from "../model/pdf-model";
 import profileImg from "../assets/profile.png";
+import { useEffect } from "react";
+import { PdfModel } from "../model/pdf-model.ts";
 
 type PdfDocumentProps = {
+  data: PdfModel | undefined;
   position: string;
   availabilityDate: string;
   availabilityHours: string;
 };
 
 // Create Document Component
-export function MyDocument({
+export function PdfPreview({
+  data,
   position,
   availabilityDate,
   availabilityHours,
 }: PdfDocumentProps) {
   const { t } = useTranslation();
 
-  const certificate: Details[] = t("certificate", { returnObjects: true });
-  const details: Details[] = t("details", { returnObjects: true });
-  const availabilityDetails: Details = t("availability", {
-    returnObjects: true,
-  });
-  const skills: Skills[] = t("skills.details", { returnObjects: true });
-  const furtherSkills: Skills[] = t("furtherSkills.details", {
-    returnObjects: true,
-  });
-  const work: Work[] = t("work.details", { returnObjects: true });
-  const education: Education[] = t("education.details", {
-    returnObjects: true,
-  });
-  const projects: Project[] = t("projects.details", { returnObjects: true });
+  useEffect(() => {
+    console.log("should get the context: ", data);
+  }, [data]);
 
   function getProjectRow(rowData: { name: string; detail: string }) {
     return (
@@ -86,7 +78,7 @@ export function MyDocument({
             <Text style={styles.position}>{t(position)}</Text>
 
             <View style={styles.certificateWrapper}>
-              {certificate.map((entry, index) => (
+              {data?.certificate?.map((entry, index) => (
                 <View key={index}>
                   <Text style={styles.certificateTitle}>{entry.name}</Text>
                   <Text style={styles.certificateDetail}>{entry.detail}</Text>
@@ -94,7 +86,7 @@ export function MyDocument({
               ))}
             </View>
 
-            {details.map((entry, index) => (
+            {data?.details?.map((entry, index) => (
               <View key={index} style={styles.row}>
                 <Text style={styles.columnLeft}>{entry.name}</Text>
                 <Text style={styles.columnRight}>{entry.detail}</Text>
@@ -102,20 +94,18 @@ export function MyDocument({
             ))}
 
             <View style={styles.row}>
-              <Text style={styles.columnLeft}>{availabilityDetails.name}</Text>
+              <Text style={styles.columnLeft}>{data?.availability?.name}</Text>
               <Text style={styles.columnRight}>
-                {t("availability.detail", {
-                  date: availabilityDate,
-                  hours: availabilityHours,
-                })}
+                <Text>{data?.availability?.name}</Text>
+                <Text>{data?.availability?.detail}</Text>
               </Text>
             </View>
           </View>
         </View>
 
         {/* skills */}
-        <Text style={styles.skillSectionTitle}>{t("skills.name")}</Text>
-        {skills.map((skill, index) => (
+        <Text style={styles.skillSectionTitle}>{data?.skills?.name}</Text>
+        {data?.skills?.details.map((skill, index) => (
           <View key={index} style={styles.row}>
             <View style={styles.columnLeft}>
               <Text style={styles.skillTitle}>{skill.name}</Text>
@@ -124,9 +114,11 @@ export function MyDocument({
           </View>
         ))}
 
-        {/* furhter skills */}
-        <Text style={styles.skillSectionTitle}>{t("furtherSkills.name")}</Text>
-        {furtherSkills.map((skill, index) => (
+        {/* further skills */}
+        <Text style={styles.skillSectionTitle}>
+          {data?.furtherSkills?.name}
+        </Text>
+        {data?.furtherSkills?.details.map((skill, index) => (
           <View key={index} style={styles.row}>
             <View style={styles.columnLeft}>
               <Text style={styles.skillTitle}>{skill.name}</Text>
@@ -136,8 +128,8 @@ export function MyDocument({
         ))}
 
         {/* work */}
-        <Text style={styles.sectionTitle}>{t("work.name")}</Text>
-        {work.map((entry, index) => (
+        <Text style={styles.sectionTitle}>{data?.work?.name}</Text>
+        {data?.work?.details.map((entry, index) => (
           <View key={index} style={styles.row}>
             <View style={styles.columnLeft}>
               <Text style={styles.dateTitle}>{entry.date}</Text>
@@ -150,8 +142,8 @@ export function MyDocument({
         ))}
 
         {/* education */}
-        <Text style={styles.sectionTitle}>{t("education.name")}</Text>
-        {education.map((entry, index) => (
+        <Text style={styles.sectionTitle}>{data?.education?.name}</Text>
+        {data?.education?.details.map((entry, index) => (
           <View key={index} style={styles.row}>
             <View style={styles.columnLeft}>
               <Text style={styles.dateTitle}>{entry.date}</Text>
@@ -164,8 +156,8 @@ export function MyDocument({
         ))}
 
         {/* projects */}
-        <Text style={styles.sectionTitle}>{t("projects.name")}</Text>
-        {projects.map((project, index) => (
+        <Text style={styles.sectionTitle}>{data?.projects?.name}</Text>
+        {data?.projects?.details.map((project, index) => (
           <View key={index}>
             <View style={styles.row}>
               <View style={styles.columnLeft}>

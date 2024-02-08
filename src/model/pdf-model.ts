@@ -1,40 +1,27 @@
-export type Details = {
+import {
+  Details,
+  Education,
+  Project,
+  Skills,
+  Work,
+} from "./pdf-model-units.ts";
+
+interface NameAndGenericDetails<T> {
   name: string;
-  detail: string;
-};
+  details: T;
+}
 
-export type Skills = {
+export type PdfModel = {
+  fileName: string;
+  pageFooter: string;
   name: string;
-  description: string;
-};
-
-export type Work = {
-  date: string;
-  employer: string;
-  position: string;
-};
-
-export type Education = {
-  date: string;
-  university: string;
-  department: string;
-};
-
-type ProjectDetail = {
-  name: string;
-  detail: string;
-};
-
-type ProjectContribution = {
-  name: string;
-  detail: string[];
-};
-
-export type Project = {
-  date: string;
-  title: string;
-  description: ProjectDetail;
-  contribution: ProjectContribution;
-  techStack: ProjectDetail;
-  industry: ProjectDetail;
+  position: string[];
+  certificate: Details[];
+  details: Details[];
+  availability: Details;
+  skills: NameAndGenericDetails<Skills[]>;
+  furtherSkills: NameAndGenericDetails<Skills[]>;
+  work: NameAndGenericDetails<Work[]>;
+  education: NameAndGenericDetails<Education[]>;
+  projects: NameAndGenericDetails<Project[]>;
 };
