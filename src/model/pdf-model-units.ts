@@ -20,7 +20,7 @@ export type Education = {
   department: string;
 };
 
-interface NameAndGenericDetails<T> {
+export interface NameAndGenericDetail<T> {
   name: string;
   detail: T;
 }
@@ -28,8 +28,8 @@ interface NameAndGenericDetails<T> {
 export type Project = {
   date: string;
   title: string;
-  description: NameAndGenericDetails<string>;
-  contribution: NameAndGenericDetails<string[]>;
-  techStack: NameAndGenericDetails<string>;
-  industry: NameAndGenericDetails<string>;
+  description: NameAndGenericDetail<string>;
+  contribution: NameAndGenericDetail<string[]>;
+  techStack: NameAndGenericDetail<string>;
+  industry: NameAndGenericDetail<string>;
 };

@@ -1,22 +1,28 @@
-import { useRef } from "react";
 import { Button } from "@mui/material";
 import { PdfModel } from "../model/pdf-model";
+import { RefObject } from "react";
 
 type DndUploadProps = {
-  jsonData: (jsonData: PdfModel) => void;
+  uploadData: (data: PdfModel | File) => void;
+  label: string;
+  hiddenFileInput: RefObject<HTMLInputElement>;
+  parseInput: boolean;
+  id: string;
 };
 
-export function DndUpload({ jsonData }: DndUploadProps) {
-  const hiddenFileInput = useRef<HTMLInputElement>(null);
-
+export function DndUpload({
+  uploadData,
+  label,
+  hiddenFileInput,
+  parseInput,
+  id,
+}: DndUploadProps) {
   function handleClick() {
-    hiddenFileInput.current?.click();
+    hiddenFileInput?.current?.click();
   }
 
   function handleChange() {
-    const fileUploadInput = document.getElementById(
-      "input",
-    ) as HTMLInputElement;
+    const fileUploadInput = document.getElementById(id) as HTMLInputElement;
     if (
       fileUploadInput == null ||
       fileUploadInput.files == null ||
@@ -25,8 +31,13 @@ export function DndUpload({ jsonData }: DndUploadProps) {
       return;
     }
     const reader = new FileReader();
+
     reader.onload = (event) => {
-      jsonData(event?.target?.result); // TODO: TS
+      if (parseInput) {
+        uploadData(JSON.parse(event?.target?.result));
+      } else {
+        uploadData(URL.createObjectURL(fileUploadInput.files[0]));
+      }
     };
     const selectedFile = fileUploadInput.files[0];
     reader.readAsText(selectedFile);
@@ -34,15 +45,15 @@ export function DndUpload({ jsonData }: DndUploadProps) {
 
   return (
     <>
-      <Button variant={"outlined"} onClick={handleClick}>
-        Upload a file
+      <Button variant={"outlined"} fullWidth onClick={handleClick}>
+        {label}
       </Button>
       <input
         ref={hiddenFileInput}
         style={{ display: "none" }}
         type="file"
-        id="input"
-        multiple
+        id={id}
+        multiple={false}
         onChange={handleChange}
       />
     </>

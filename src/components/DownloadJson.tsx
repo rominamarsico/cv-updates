@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
-import data from "../translation/de.json";
+import data from "../assets/mohamad-de.json";
 
 export function DownloadJson() {
   const fileName = "cv-export.json";
@@ -17,11 +17,9 @@ export function DownloadJson() {
   }
 
   return (
-    <div>
-      <Button variant="contained" onClick={exportToJson}>
-        <DownloadIcon />
-        <span>Download JSON</span>
-      </Button>
-    </div>
+    <Button variant="contained" fullWidth onClick={exportToJson}>
+      <DownloadIcon />
+      <span>Download JSON</span>
+    </Button>
   );
 }

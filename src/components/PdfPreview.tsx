@@ -1,30 +1,17 @@
 import { Image, Document, Page, Text, View } from "@react-pdf/renderer";
 import { styles } from "./pdf-styles";
-import { useTranslation } from "react-i18next";
-import profileImg from "../assets/profile.png";
-import { useEffect } from "react";
 import { PdfModel } from "../model/pdf-model.ts";
 
 type PdfDocumentProps = {
-  data: PdfModel | undefined;
-  position: string;
-  availabilityDate: string;
-  availabilityHours: string;
+  data?: PdfModel;
+  profileImg?: File;
+  position?: string;
+  availabilityDate?: string;
+  availabilityHours?: string;
 };
 
 // Create Document Component
-export function PdfPreview({
-  data,
-  position,
-  availabilityDate,
-  availabilityHours,
-}: PdfDocumentProps) {
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    console.log("should get the context: ", data);
-  }, [data]);
-
+export function PdfPreview({ data, profileImg, position }: PdfDocumentProps) {
   function getProjectRow(rowData: { name: string; detail: string }) {
     return (
       <View style={styles.row}>
@@ -59,23 +46,27 @@ export function PdfPreview({
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* page number */}
+        {/** page number **/}
         <Text
           style={styles.pageNumber}
-          render={({ pageNumber }) => t("pageFooter", { pageNumber })}
+          render={({ pageNumber }) =>
+            data?.pageFooter?.replace("{pageNumber}", `${pageNumber}`)
+          }
           fixed
         />
 
-        {/* profile */}
+        {/** profile **/}
         <View style={styles.row}>
-          <View style={styles.columnLeft}>
-            <Image src={profileImg} />
-          </View>
+          {profileImg ? (
+            <View style={styles.columnLeft}>
+              <Image src={profileImg} />
+            </View>
+          ) : null}
 
           <View style={styles.columnRight}>
-            <Text style={styles.pageTitle}>{t("name")}</Text>
+            <Text style={styles.pageTitle}>{data?.name}</Text>
 
-            <Text style={styles.position}>{t(position)}</Text>
+            <Text style={styles.position}>{position ?? data?.position}</Text>
 
             <View style={styles.certificateWrapper}>
               {data?.certificate?.map((entry, index) => (
@@ -89,7 +80,15 @@ export function PdfPreview({
             {data?.details?.map((entry, index) => (
               <View key={index} style={styles.row}>
                 <Text style={styles.columnLeft}>{entry.name}</Text>
-                <Text style={styles.columnRight}>{entry.detail}</Text>
+                {typeof entry.detail === "string" ? (
+                  <Text style={styles.columnRight}>{entry.detail}</Text>
+                ) : (
+                  <Text style={styles.columnRight}>
+                    {entry.detail.map((detailRow, index) => (
+                      <Text key={index}>{detailRow}</Text>
+                    ))}
+                  </Text>
+                )}
               </View>
             ))}
 
@@ -103,7 +102,7 @@ export function PdfPreview({
           </View>
         </View>
 
-        {/* skills */}
+        {/** skills **/}
         <Text style={styles.skillSectionTitle}>{data?.skills?.name}</Text>
         {data?.skills?.details.map((skill, index) => (
           <View key={index} style={styles.row}>
@@ -114,7 +113,7 @@ export function PdfPreview({
           </View>
         ))}
 
-        {/* further skills */}
+        {/** further skills **/}
         <Text style={styles.skillSectionTitle}>
           {data?.furtherSkills?.name}
         </Text>
@@ -127,7 +126,7 @@ export function PdfPreview({
           </View>
         ))}
 
-        {/* work */}
+        {/** work **/}
         <Text style={styles.sectionTitle}>{data?.work?.name}</Text>
         {data?.work?.details.map((entry, index) => (
           <View key={index} style={styles.row}>
@@ -141,7 +140,7 @@ export function PdfPreview({
           </View>
         ))}
 
-        {/* education */}
+        {/** education **/}
         <Text style={styles.sectionTitle}>{data?.education?.name}</Text>
         {data?.education?.details.map((entry, index) => (
           <View key={index} style={styles.row}>
@@ -155,7 +154,7 @@ export function PdfPreview({
           </View>
         ))}
 
-        {/* projects */}
+        {/** projects **/}
         <Text style={styles.sectionTitle}>{data?.projects?.name}</Text>
         {data?.projects?.details.map((project, index) => (
           <View key={index}>

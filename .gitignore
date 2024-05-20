@@ -24,6 +24,4 @@ dist-ssr
 *.sw?
 
 # Private
-src/assets/profile.png
-src/translation/de.json
-src/translation/en.json
+src/assets/

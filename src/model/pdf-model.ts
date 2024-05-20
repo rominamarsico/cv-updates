@@ -1,6 +1,7 @@
 import {
   Details,
   Education,
+  NameAndGenericDetail,
   Project,
   Skills,
   Work,
@@ -17,7 +18,7 @@ export type PdfModel = {
   name: string;
   position: string[];
   certificate: Details[];
-  details: Details[];
+  details: NameAndGenericDetail<string[] | string>[];
   availability: Details;
   skills: NameAndGenericDetails<Skills[]>;
   furtherSkills: NameAndGenericDetails<Skills[]>;
