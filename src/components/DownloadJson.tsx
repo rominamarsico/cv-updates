@@ -1,8 +1,12 @@
 import { Button } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
-import data from "../assets/mohamad-de.json";
+import { PdfModel } from "../model/pdf-model.ts";
 
-export function DownloadJson() {
+type DownloadProps = {
+  data?: PdfModel;
+};
+
+export function DownloadJson({ data }: DownloadProps) {
   const fileName = "cv-export.json";
   const contentType = "application/json;charset=utf-8";
 

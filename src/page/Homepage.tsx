@@ -90,7 +90,7 @@ export function Homepage() {
               {({ loading }) => getDownloadButton(loading)}
             </PDFDownloadLink>
           </div>
-          <DownloadJson />
+          <DownloadJson data={data} />
         </div>
         <Position
           positionCallback={(value) => setPosition(value)}

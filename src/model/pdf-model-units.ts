@@ -18,6 +18,7 @@ export type Education = {
   date: string;
   university: string;
   department: string;
+  topics: string;
 };
 
 export interface NameAndGenericDetail<T> {

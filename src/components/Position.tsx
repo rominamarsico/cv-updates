@@ -15,7 +15,6 @@ export function Position({ positionCallback, positions }: PositionProps) {
   const [position, setPosition] = useState<string>("");
 
   function handleChange(value: string) {
-    console.log("value: ", value);
     setPosition(value);
     positionCallback(value);
   }

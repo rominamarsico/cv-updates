@@ -66,7 +66,7 @@ export function PdfPreview({ data, profileImg, position }: PdfDocumentProps) {
           <View style={styles.columnRight}>
             <Text style={styles.pageTitle}>{data?.name}</Text>
 
-            <Text style={styles.position}>{position ?? data?.position}</Text>
+            <Text style={styles.position}>{position ?? data?.position[0]}</Text>
 
             <View style={styles.certificateWrapper}>
               {data?.certificate?.map((entry, index) => (
@@ -150,6 +150,7 @@ export function PdfPreview({ data, profileImg, position }: PdfDocumentProps) {
             <View style={styles.columnRight}>
               <Text style={styles.entryTitle}>{entry.university}</Text>
               <Text>{entry.department}</Text>
+              <Text>{entry.topics}</Text>
             </View>
           </View>
         ))}
@@ -169,7 +170,7 @@ export function PdfPreview({ data, profileImg, position }: PdfDocumentProps) {
             {getProjectRow(project.description)}
             {getProjectContributionRow(project.contribution)}
             {getProjectRow(project.techStack)}
-            {getProjectRow(project.industry)}
+            {project.industry && getProjectRow(project.industry)}
           </View>
         ))}
       </Page>

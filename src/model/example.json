@@ -1,0 +1,102 @@
+{
+  "fileName": "CV",
+  "pageFooter": "Page {pageNumber} - CV",
+  "name": "Name",
+  "position": ["position 1", "position 2"],
+  "certificate": [
+    {
+      "name": "Certificate",
+      "detail": "Details"
+    }
+  ],
+  "details": [
+    {
+      "name": "Mail",
+      "detail": "Mail"
+    },
+    {
+      "name": "Telephone",
+      "detail": "1234"
+    },
+    {
+      "name": "City",
+      "detail": "City"
+    },
+    {
+      "name": "Languages",
+      "detail": ["english - level"]
+    }
+  ],
+  "skills": {
+    "name": "Core Competencies",
+    "details": [
+      {
+        "name": "Name",
+        "description": "Description"
+      },
+      {
+        "name": "Name",
+        "description": "Description"
+      }
+    ]
+  },
+  "furtherSkills": {
+    "name": "Extended Competencies",
+    "details": [
+      {
+        "name": "Name",
+        "description": "Description"
+      },
+      {
+        "name": "Name",
+        "description": "Description"
+      }
+    ]
+  },
+  "work": {
+    "name": "Work",
+    "details": [
+      {
+        "date": "01/2024 - today",
+        "employer": "Employer",
+        "position": "Position"
+      }
+    ]
+  },
+  "education": {
+    "name": "Education",
+    "details": [
+      {
+        "date": "01/2020 - 12/2023",
+        "university": "Univeresity",
+        "department": "Bachelor",
+        "topics": "details"
+      }
+    ]
+  },
+  "projects": {
+    "name": "Projects",
+    "details": [
+      {
+        "date": "06/20 - 10/20",
+        "title": "Project Title",
+        "description": {
+          "name": "Description",
+          "detail": "Details"
+        },
+        "contribution": {
+          "name": "My contribution",
+          "detail": ["Detail 1", "Detail 2"]
+        },
+        "techStack": {
+          "name": "Technology",
+          "detail": "Tool 1 & tool 2"
+        },
+        "industry": {
+          "name": "Industry",
+          "detail": "Industry"
+        }
+      }
+    ]
+  }
+}
