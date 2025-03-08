@@ -12,12 +12,12 @@ export function Availability({
   return (
     <div style={{ display: "flex" }}>
       <TextField
-        label="Verrügbar ab"
+        label="Available from"
         variant="outlined"
         onChange={(e) => availabilityDateCallback(e.target.value)}
       />
       <TextField
-        label="Stunden pro Woche"
+        label="Hours per week"
         variant="outlined"
         onChange={(e) => availabilityHoursCallback(e.target.value)}
       />

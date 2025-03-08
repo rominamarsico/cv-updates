@@ -1,11 +1,12 @@
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
+import UploadIcon from "@mui/icons-material/Upload";
 import { PdfModel } from "../model/pdf-model";
-import { RefObject } from "react";
+import { Ref } from "react";
 
 type DndUploadProps = {
   uploadData: (data: PdfModel | File) => void;
   label: string;
-  hiddenFileInput: RefObject<HTMLInputElement>;
+  hiddenFileInput?: Ref<HTMLInputElement>;
   parseInput: boolean;
   id: string;
 };
@@ -45,7 +46,8 @@ export function DndUpload({
 
   return (
     <>
-      <Button variant={"outlined"} fullWidth onClick={handleClick}>
+      <Button variant="outlined" fullWidth onClick={handleClick}>
+        <UploadIcon />
         {label}
       </Button>
       <input

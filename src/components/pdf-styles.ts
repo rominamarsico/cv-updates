@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     fontSize: "12px",
     padding: "40px 50px",
-    lineHeight: "1.5px",
+    // lineHeight: "1.5px",
   },
   pageNumber: {
     position: "absolute",

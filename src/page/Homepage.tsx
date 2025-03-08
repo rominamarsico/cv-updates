@@ -1,9 +1,9 @@
 import "../App.css";
-import { useRef, useState } from "react";
+import { useRef, useState, ReactNode } from "react";
 import { PDFViewer } from "@react-pdf/renderer";
-import { PdfPreview } from "../components/PdfPreview.tsx";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { Button } from "@mui/material";
+import { PdfPreview } from "../components/PdfPreview.tsx";
+import Button from "@mui/material/Button";
 import DownloadIcon from "@mui/icons-material/Download";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Position } from "../components/Position.tsx";
@@ -11,6 +11,7 @@ import { Availability } from "../components/Availability.tsx";
 import { DownloadJson } from "../components/DownloadJson.tsx";
 import { DndUpload } from "../components/DndUpload.tsx";
 import { PdfModel } from "../model/pdf-model.ts";
+import exampleData from "../model/example.json";
 
 export function Homepage() {
   const [position, setPosition] = useState<string | undefined>(undefined);
@@ -19,25 +20,20 @@ export function Homepage() {
   const [profileImg, setProfileImg] = useState<File | undefined>(undefined);
   const [data, setData] = useState<PdfModel | undefined>(undefined);
 
-  function handleChangeJson(jsonData: PdfModel) {
-    setData(jsonData);
-  }
-
-  function handleChangeImage(image: File) {
-    setProfileImg(image);
-  }
-
   function getDownloadButton(loading: boolean) {
-    return (
+    const downloadButton = (
       <Button variant="contained" fullWidth>
-        {loading ? (
-          <CircularProgress size="1rem" color={"inherit"} />
-        ) : (
-          <DownloadIcon />
-        )}
-        <span>Download CV</span>
+        <span>
+          {loading ? (
+            <CircularProgress size="1rem" color="inherit" />
+          ) : (
+            <DownloadIcon />
+          )}
+        </span>
+        <span>Download CV as PDF</span>
       </Button>
     );
+    return downloadButton as ReactNode;
   }
 
   const pdfDocument = (
@@ -50,47 +46,54 @@ export function Homepage() {
     />
   );
 
-  const hiddenImageInput = useRef<HTMLInputElement>(null);
-  const hiddenFileInput = useRef<HTMLInputElement>(null);
+  const hiddenImageInput = useRef<HTMLInputElement | undefined>(undefined);
+  const hiddenFileInput = useRef<HTMLInputElement | undefined>(undefined);
+
+  const pdfPreview = (
+    <div className="iFrameWrapper">
+      <PDFViewer showToolbar={false} style={{ height: "100%", width: "100%" }}>
+        {pdfDocument}
+      </PDFViewer>
+    </div>
+  );
+
+  const downloadExample = (
+    <DownloadJson
+      data={exampleData}
+      fileName="cv-export.json"
+      label="Download Example Data"
+    />
+  );
+
+  const uploadImage = (
+    <DndUpload
+      label={"Upload image"}
+      uploadData={(image: File) => setProfileImg(image)}
+      hiddenFileInput={hiddenImageInput}
+      id={"imageInput"}
+      parseInput={false}
+    />
+  );
+
+  const uploadCV = (
+    <DndUpload
+      label={"Upload your CV as JSON file"}
+      uploadData={(jsonData: PdfModel) => setData(jsonData)}
+      hiddenFileInput={hiddenFileInput}
+      id={"jsonInput"}
+      parseInput={true}
+    />
+  );
 
   return (
     <div className="app">
-      <div className="iFrameWrapper">
-        <PDFViewer
-          showToolbar={false}
-          style={{ height: "100%", width: "100%" }}
-        >
-          {pdfDocument}
-        </PDFViewer>
-      </div>
+      {pdfPreview}
       <div className="controls">
         <h2>CV UPDATES</h2>
+        <div className="horizontalFlex">{downloadExample}</div>
         <div className="horizontalFlex">
-          <DndUpload
-            label={"Upload image"}
-            uploadData={(image) => handleChangeImage(image)}
-            hiddenFileInput={hiddenImageInput}
-            id={"imageInput"}
-            parseInput={false}
-          />
-          <DndUpload
-            label={"Upload JSON file"}
-            uploadData={(jsonData) => handleChangeJson(jsonData)}
-            hiddenFileInput={hiddenFileInput}
-            id={"jsonInput"}
-            parseInput={true}
-          />
-        </div>
-        <div className="horizontalFlex">
-          <div style={{ width: "100%" }}>
-            <PDFDownloadLink
-              document={pdfDocument}
-              fileName={`${data?.fileName}.pdf`}
-            >
-              {({ loading }) => getDownloadButton(loading)}
-            </PDFDownloadLink>
-          </div>
-          <DownloadJson data={data} />
+          {uploadImage}
+          {uploadCV}
         </div>
         <Position
           positionCallback={(value) => setPosition(value)}
@@ -100,6 +103,21 @@ export function Homepage() {
           availabilityDateCallback={(value) => setAvailabilityDate(value)}
           availabilityHoursCallback={(value) => setAvailabilityHours(value)}
         />
+        <div className="horizontalFlex">
+          <DownloadJson
+            data={data}
+            fileName="cv-export.json"
+            label="Download CV as JSON"
+          />
+          <div style={{ width: "100%" }}>
+            <PDFDownloadLink
+              document={pdfDocument}
+              fileName={`${data?.fileName}.pdf`}
+            >
+              {({ loading }) => getDownloadButton(loading)}
+            </PDFDownloadLink>
+          </div>
+        </div>
       </div>
     </div>
   );

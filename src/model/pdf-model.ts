@@ -1,4 +1,5 @@
 import {
+  Availablity,
   Details,
   Education,
   NameAndGenericDetail,
@@ -19,7 +20,7 @@ export type PdfModel = {
   position: string[];
   certificate: Details[];
   details: NameAndGenericDetail<string[] | string>[];
-  availability: Details;
+  availability: Availablity;
   skills: NameAndGenericDetails<Skills[]>;
   furtherSkills: NameAndGenericDetails<Skills[]>;
   work: NameAndGenericDetails<Work[]>;

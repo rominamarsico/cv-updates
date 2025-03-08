@@ -3,6 +3,12 @@ export type Details = {
   detail: string;
 };
 
+export type Availablity = {
+  name: string;
+  date: string;
+  hours: string;
+};
+
 export type Skills = {
   name: string;
   description: string;

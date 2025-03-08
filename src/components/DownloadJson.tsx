@@ -1,13 +1,14 @@
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import DownloadIcon from "@mui/icons-material/Download";
 import { PdfModel } from "../model/pdf-model.ts";
 
 type DownloadProps = {
   data?: PdfModel;
+  fileName: string;
+  label: string;
 };
 
-export function DownloadJson({ data }: DownloadProps) {
-  const fileName = "cv-export.json";
+export function DownloadJson({ data, fileName, label }: DownloadProps) {
   const contentType = "application/json;charset=utf-8";
 
   function exportToJson() {
@@ -23,7 +24,7 @@ export function DownloadJson({ data }: DownloadProps) {
   return (
     <Button variant="contained" fullWidth onClick={exportToJson}>
       <DownloadIcon />
-      <span>Download JSON</span>
+      <span>{label}</span>
     </Button>
   );
 }

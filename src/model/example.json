@@ -27,6 +27,11 @@
       "detail": ["english - level"]
     }
   ],
+  "availability": {
+    "name": "Available from ",
+    "date": "{date} ",
+    "hours": "({hours} hours/week)"
+  },
   "skills": {
     "name": "Core Competencies",
     "details": [

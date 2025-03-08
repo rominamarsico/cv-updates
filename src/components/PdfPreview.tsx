@@ -1,6 +1,7 @@
 import { Image, Document, Page, Text, View } from "@react-pdf/renderer";
 import { styles } from "./pdf-styles";
 import { PdfModel } from "../model/pdf-model.ts";
+import { useEffect } from "react";
 
 type PdfDocumentProps = {
   data?: PdfModel;
@@ -11,7 +12,13 @@ type PdfDocumentProps = {
 };
 
 // Create Document Component
-export function PdfPreview({ data, profileImg, position }: PdfDocumentProps) {
+export function PdfPreview({
+  data,
+  profileImg,
+  position,
+  availabilityDate,
+  availabilityHours,
+}: PdfDocumentProps) {
   function getProjectRow(rowData: { name: string; detail: string }) {
     return (
       <View style={styles.row}>
@@ -57,11 +64,13 @@ export function PdfPreview({ data, profileImg, position }: PdfDocumentProps) {
 
         {/** profile **/}
         <View style={styles.row}>
-          {profileImg ? (
-            <View style={styles.columnLeft}>
-              <Image src={profileImg} />
-            </View>
-          ) : null}
+          <View>
+            {profileImg ? (
+              <View style={styles.columnLeft}>
+                <Image src={profileImg} />
+              </View>
+            ) : null}
+          </View>
 
           <View style={styles.columnRight}>
             <Text style={styles.pageTitle}>{data?.name}</Text>
@@ -95,8 +104,17 @@ export function PdfPreview({ data, profileImg, position }: PdfDocumentProps) {
             <View style={styles.row}>
               <Text style={styles.columnLeft}>{data?.availability?.name}</Text>
               <Text style={styles.columnRight}>
-                <Text>{data?.availability?.name}</Text>
-                <Text>{data?.availability?.detail}</Text>
+                <Text>
+                  {data?.availability?.name}
+                  {data?.availability?.date?.replace(
+                    "{date}",
+                    `${availabilityDate}`,
+                  )}
+                  {data?.availability?.hours?.replace(
+                    "{hours}",
+                    `${availabilityHours}`,
+                  )}
+                </Text>
               </Text>
             </View>
           </View>
