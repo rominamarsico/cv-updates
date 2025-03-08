@@ -1,7 +1,6 @@
 import { Image, Document, Page, Text, View } from "@react-pdf/renderer";
 import { styles } from "./pdf-styles";
 import { PdfModel } from "../model/pdf-model.ts";
-import { useEffect } from "react";
 
 type PdfDocumentProps = {
   data?: PdfModel;
@@ -75,7 +74,7 @@ export function PdfPreview({
           <View style={styles.columnRight}>
             <Text style={styles.pageTitle}>{data?.name}</Text>
 
-            <Text style={styles.position}>{position ?? data?.position[0]}</Text>
+            <Text style={styles.position}>{position}</Text>
 
             <View style={styles.certificateWrapper}>
               {data?.certificate?.map((entry, index) => (

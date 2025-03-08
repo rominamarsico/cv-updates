@@ -10,7 +10,7 @@ export function Availability({
   availabilityHoursCallback,
 }: AvailabilityProps) {
   return (
-    <div style={{ display: "flex" }}>
+    <div className="horizontalFlex">
       <TextField
         label="Available from"
         variant="outlined"

@@ -14,7 +14,7 @@ import { PdfModel } from "../model/pdf-model.ts";
 import exampleData from "../model/example.json";
 
 export function Homepage() {
-  const [position, setPosition] = useState<string | undefined>(undefined);
+  const [position, setPosition] = useState<string>("");
   const [availabilityDate, setAvailabilityDate] = useState<string>("");
   const [availabilityHours, setAvailabilityHours] = useState<string>("");
   const [profileImg, setProfileImg] = useState<File | undefined>(undefined);
@@ -104,12 +104,14 @@ export function Homepage() {
           availabilityHoursCallback={(value) => setAvailabilityHours(value)}
         />
         <div className="horizontalFlex">
-          <DownloadJson
-            data={data}
-            fileName="cv-export.json"
-            label="Download CV as JSON"
-          />
-          <div style={{ width: "100%" }}>
+          <div style={{ flexBasis: "0", flexGrow: "1" }}>
+            <DownloadJson
+              data={data}
+              fileName="cv-export.json"
+              label="Download CV as JSON"
+            />
+          </div>
+          <div style={{ width: "100%", flexBasis: "0", flexGrow: "1" }}>
             <PDFDownloadLink
               document={pdfDocument}
               fileName={`${data?.fileName}.pdf`}

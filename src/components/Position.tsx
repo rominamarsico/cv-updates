@@ -1,10 +1,12 @@
-import { useState } from "react";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import CloseIcon from "@mui/icons-material/Close";
+import { ChangeEvent, useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
 
 type PositionProps = {
   positionCallback: (position: string) => void;
@@ -20,31 +22,52 @@ export function Position({ positionCallback, positions }: PositionProps) {
   }
 
   const positionPicker = (
-    <ToggleButtonGroup
-      color="primary"
-      value={position}
-      exclusive
-      onChange={(e: React.MouseEvent<Element, MouseEvent>) =>
-        handleChange((e.target as HTMLInputElement).value)
-      }
+    <FormControl
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "start",
+        justifyContent: "space-between",
+      }}
     >
-      {positions?.map((entry, index) => (
-        <ToggleButton key={index} value={entry}>
-          {entry}
-        </ToggleButton>
-      ))}
-      <ToggleButton value={""}>
-        <CloseIcon />
-      </ToggleButton>
-
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Tooltip title="Erscheint unter deinem Namen" placement="top">
-          <IconButton>
-            <InfoIcon />
-          </IconButton>
-        </Tooltip>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "start",
+        }}
+      >
+        <FormLabel>Job Title</FormLabel>
+        <RadioGroup
+          defaultValue={position}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleChange((e.target as HTMLInputElement).value)
+          }
+        >
+          {positions?.map((entry, index) => (
+            <FormControlLabel
+              key={index}
+              value={entry}
+              control={<Radio />}
+              label={entry}
+            />
+          ))}
+          <FormControlLabel
+            key="none"
+            value=""
+            control={<Radio />}
+            label="None"
+          />
+        </RadioGroup>
       </div>
-    </ToggleButtonGroup>
+
+      <Tooltip title="Erscheint unter deinem Namen" placement="bottom">
+        <IconButton>
+          <InfoIcon />
+        </IconButton>
+      </Tooltip>
+    </FormControl>
   );
 
   return <>{positions ? positionPicker : null}</>;
