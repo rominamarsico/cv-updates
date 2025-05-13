@@ -1,7 +1,6 @@
 import { Image, Document, Page, Text, View } from "@react-pdf/renderer";
 import { styles } from "./pdf-styles";
 import { PdfModel } from "../model/pdf-model.ts";
-import { useEffect } from "react";
 
 type PdfDocumentProps = {
   data?: PdfModel;
@@ -64,13 +63,11 @@ export function PdfPreview({
 
         {/** profile **/}
         <View style={styles.row}>
-          <View>
-            {profileImg ? (
-              <View style={styles.columnLeft}>
-                <Image src={profileImg} />
-              </View>
-            ) : null}
-          </View>
+          {profileImg ? (
+            <View style={styles.columnLeft}>
+              <Image src={profileImg} />
+            </View>
+          ) : null}
 
           <View style={styles.columnRight}>
             <Text style={styles.pageTitle}>{data?.name}</Text>
@@ -105,7 +102,6 @@ export function PdfPreview({
               <Text style={styles.columnLeft}>{data?.availability?.name}</Text>
               <Text style={styles.columnRight}>
                 <Text>
-                  {data?.availability?.name}
                   {data?.availability?.date?.replace(
                     "{date}",
                     `${availabilityDate}`,
@@ -147,7 +143,7 @@ export function PdfPreview({
         {/** work **/}
         <Text style={styles.sectionTitle}>{data?.work?.name}</Text>
         {data?.work?.details.map((entry, index) => (
-          <View key={index} style={styles.row}>
+          <View wrap={false} key={index} style={styles.row}>
             <View style={styles.columnLeft}>
               <Text style={styles.dateTitle}>{entry.date}</Text>
             </View>

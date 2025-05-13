@@ -3,15 +3,17 @@ import { StyleSheet } from "@react-pdf/renderer";
 // Create styles
 export const styles = StyleSheet.create({
   page: {
+    display: "flex",
     flexDirection: "column",
     fontSize: "12px",
     padding: "40px 50px",
-    // lineHeight: "1.5px",
   },
   pageNumber: {
     position: "absolute",
     bottom: "30px",
-    left: "50%",
+    left: "0",
+    width: "100%",
+    textAlign: "center",
     color: "grey",
   },
   position: {
@@ -50,6 +52,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: "8px",
   },
   columnLeft: {
     flexBasis: "35%",
